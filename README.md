@@ -16,6 +16,7 @@ First, we create a `cronjob` definition named `daemonset-jobs.yaml`. There's a s
 Check out this pretty image to better understand what's going on under the hood.
 ![runOnce Daemonset-Job for OpenShift](daemonset-job.png)
 
+
 # Required variables
 Before you get going, there's a few variables that MUST be specified in your main `cronjob` definition.
 
