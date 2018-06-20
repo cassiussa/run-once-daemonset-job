@@ -40,7 +40,7 @@ spec:
 #               value: <my-daemonset-job-image:latest>
 #             image: <daemonset-jobs:latest <-- build from the Dockerfile in this repository>
               command: ["/bin/bash"]
-              args: ["/scripts/ocp_daemonset-job.sh"]
+              args: ["/scripts/daemonset-job.sh"]
               imagePullPolicy: Always
               name: daemonset-job-sample
               resources:
