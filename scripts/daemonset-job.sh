@@ -85,11 +85,6 @@ for NODE in "${HOSTS_ARRAY[@]}"; do
 
     # Replace the variables in the yaml file with variables expanded from this script
     printf "%s\n" "$(expand_variables_in_textfile /scripts/daemonset-jobs/${JOB_TO_RUN})" > /scripts/daemonset-jobs/${JOB_NAME}.yaml
-    echo "################################################################"
-    echo "Here's what the file for ${NODE_SELECTOR_VALUE} looks like"
-    echo "################################################################"
-    cat /scripts/daemonset-jobs/${JOB_NAME}.yaml
-    echo "################################################################"
 
     # Create the Job object
     echo "Creating the job ${JOB_NAME}"
