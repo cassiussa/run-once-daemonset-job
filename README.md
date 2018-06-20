@@ -45,7 +45,9 @@ spec:
               - name: NODE_SELECTOR_KEY
                 value: kubernetes.io/hostname
               - name: NODE_SELECTOR_VALUE
-                value: app01.mydomain.com app02.mydomain.com opp03.mydomain.com buildnode01.mydomain.com infra01.mydomain.com infra02.mydomain.com
+                value: app01.mydomain.com app02.mydomain.com opp03.mydomain.com
+                  buildnode01.mydomain.com infra01.mydomain.com infra02.mydomain.com
+                  infra03.mydomain.com logs01.mydomain.com logs02.mydomain.com
               - name: IMAGE_TO_USE
                 value: docker-registry.default.svc:5000/monitor/ocp-ops-base-image:latest
               - name: DAEMONSETJOB_SOME_NUMBER
