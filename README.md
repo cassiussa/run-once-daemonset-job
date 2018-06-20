@@ -1,6 +1,6 @@
-# runOnce Daemonset Job for Kubernetes
-Lets say you want to be able to run a job on a series of nodes with a specific label.
-- A Daemonset would let you run pods on different nodes, but not as a job
+# runOnce Daemonset Job for OpenShift (and Kubernetes)
+Lets say you want to be able to run a `job` on a series of nodes with a specific label.
+- A Daemonset would let you run pods on different nodes, but not as a `job`
 - A Job will let you run something once, but there's no guarantee it'll run on all the nodes you want it to
 
 This git repo can help...
@@ -13,7 +13,8 @@ A bit more detail: The main Job will create your yaml Job definitions, replacing
 # How does it work?
 First, we create a `cronjob` definition named `daemonset-jobs.yaml`. There's a sample in this repository at `scripts/daemonset-jobs-sample.yaml`.  The file contains a typical Kubernetes definition for a `cronjob` and also includes any environment variables or other details you want to pass down to your `daemonset-job`.
 
-Check out this pretty image to better understand what's going on under the hood. (coming soon)
+Check out this pretty image to better understand what's going on under the hood.
+![runOnce Daemonset-Job for OpenShift](daemonset-job.png)
 
 # Required variables
 Before you get going, there's a few variables that MUST be specified in your main `cronjob` definition.
