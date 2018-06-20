@@ -18,13 +18,13 @@ Check out this pretty image to better understand what's going on under the hood.
 # Required variables
 Before you get going, there's a few variables that MUST be specified in your main `cronjob` definition.
 
-- JOB_NAME : The name that the downstream job will use.  The final job name will appended with a numerical value, depending on the number of nodes you run it on
-- JOB_TO_RUN : This is the yaml definition for the downstream Job you want to run.  Example value for the key would be host-checks.yaml
-- RUN_SCRIPT : The script to run as `CMD` on the downstream Job's pod.
-- NODE_SELECTOR_KEY : The key to be used for the nodeSelector.  A recommendation is to specify 'kubernetes.io/hostname' for this value as it would give the most control
-- NODE_SELECTOR_VALUE : A space-separated list of nodeSelector values to use.  My recommendation is that this is list of node names.  In combination with 'kubernetes.io/hostname' you can specify all the nodes you want the daemonset-job to run on by their hostname
-- IMAGE_TO_USE : This is the Docker image to use for the downstream Job.
-- DAEMONSETJOB\_<ANYTHING> :  Use this when you want the downstream Job to have environment variables.  Any variable prepended with 'DAEMONSETJOB\_' will be interpreted as an environment variable to be used by the downstream Job and the 'DAEMONSETJOB\_' will be removed from the final variable name.
+- `JOB_NAME` : The name that the downstream job will use.  The final job name will appended with a numerical value, depending on the number of nodes you run it on
+- `JOB_TO_RUN` : This is the yaml definition for the downstream Job you want to run.  Example value for the key would be host-checks.yaml
+- `RUN_SCRIPT` : The script to run as `CMD` on the downstream Job's pod.
+- `NODE_SELECTOR_KEY` : The key to be used for the nodeSelector.  A recommendation is to specify 'kubernetes.io/hostname' for this value as it would give the most control
+- `NODE_SELECTOR_VALUE` : A space-separated list of nodeSelector values to use.  My recommendation is that this is list of node names.  In combination with 'kubernetes.io/hostname' you can specify all the nodes you want the daemonset-job to run on by their hostname
+- `IMAGE_TO_USE` : This is the Docker image to use for the downstream Job.
+- `DAEMONSETJOB\_<ANYTHING>` :  Use this when you want the downstream Job to have environment variables.  Any variable prepended with 'DAEMONSETJOB\_' will be interpreted as an environment variable to be used by the downstream Job and the 'DAEMONSETJOB\_' will be removed from the final variable name.
 
 Here's an example of what your environment variables might look like in your main `cronJob` definition.
 ```
