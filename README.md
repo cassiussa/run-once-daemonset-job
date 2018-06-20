@@ -11,7 +11,9 @@ In it's simplest form, 'runOnce Daemonset Job' is a Kubernetes CronJob that will
 A bit more detail: The main Job will create your yaml Job definitions, replacing variables as needed, and then creating the Job based on that definition.
 
 # How does it work?
-First, we create a `cronjob` definition named `daemonset-jobs.yaml`. There's a sample in this repository at `scripts/daemonset-jobs-sample.yaml`.  The file contains a typical Kubernetes definition for a `cronjob` and also includes any environment variables or other details you want to pass down to your `daemonset-job`.
+First, we create a `cronjob` definition named `daemonset-jobs.yaml`. There's a sample in this repository at `scripts/daemonset-job_sample.yaml`.  The file contains a typical Kubernetes definition for a `cronjob` and also includes any environment variables or other details you want to pass down to your `daemonset-job`.
+
+You MUST update the fields that are commented out in the `scripts/daemonset-job_sample.yaml` file to meet your needs.
 
 Check out this pretty image to better understand what's going on under the hood.
 ![runOnce Daemonset-Job for OpenShift](daemonset-job.png)
@@ -60,3 +62,10 @@ spec:
                 value: here's some text I want to pass into the downstream Job
 ```
 
+In addition to this, you'll need to create a `serviceaccount` in order to kick off the `job`s for you since the container will be using the `oc apply` command.
+
+Here's an example:
+```
+oc create sa dsj --namespace <mynamespace>
+oc policy add-role-to-user admin --serviceaccount=dsj --namespace <mynamespace> (you might want to choose something other than admin if your jobs don't need it)
+```

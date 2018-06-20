@@ -1,0 +1,72 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: daemonset-job-sample
+spec:
+  concurrencyPolicy: Allow
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    metadata:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: daemonset-job-sample
+            name: daemonset-job-sample
+        spec:
+          containers:
+            - env:
+              - name: DSJ_USER
+                valueFrom:
+                  secretKeyRef:
+                    name: dsj-user
+                    key: DSJ_USER
+              - name: DSJ_PASS
+                valueFrom:
+                  secretKeyRef:
+                    name: dsj-user
+                    key: DSJ_PASS
+              - name: JOB_NAME
+                value: clear-exited-containers
+              - name: JOB_TO_RUN
+                value: clear-exited-containers.yaml
+              - name: RUN_SCRIPT
+                value: clear-exited-containers.sh
+              - name: NODE_SELECTOR_KEY
+                value: kubernetes.io/hostname
+              - name: NODE_SELECTOR_VALUE
+#               value: app01.mydomain.com app02.mydomain.com opp03.mydomain.com buildnode01.mydomain.com infra01.mydomain.com infra02.mydomain.com infra03.mydomain.com logs01.mydomain.com logs02.mydomain.com
+              - name: IMAGE_TO_USE
+#               value: <my-daemonset-job-image:latest>
+#             image: <my-base-image:latest <-- build from the Dockerfile in this repository>
+              command: ["/bin/bash"]
+              args: ["/scripts/ocp_daemonset-job.sh"]
+              imagePullPolicy: Always
+              name: daemonset-job-sample
+              resources:
+                limits:
+                  cpu: 200m
+                  memory: 200Mi
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              volumeMounts:
+                 - mountPath: /var/run/docker.sock
+                   name: docker-sock
+          nodeSelector: {}
+          dnsPolicy: ClusterFirst
+          restartPolicy: Never
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+          volumes:
+          - name: dsj-user
+            secret:
+              defaultMode: 400
+              secretName: dsj-user
+          - hostPath:
+              path: /var/run/docker.sock
+              type: ''
+            name: docker-sock
+# Run this every hour
+  schedule: "0 * * * *"
+  successfulJobsHistoryLimit: 1

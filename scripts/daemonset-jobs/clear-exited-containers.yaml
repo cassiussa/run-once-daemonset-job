@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ${JOB_NAME}
+spec:
+  template:
+    metadata:
+      labels:
+        app: ${JOB_NAME}
+        name: ${JOB_NAME}
+    spec:
+      containers:
+        - env:${ENVIRONMENT_VARIABLE_REPLACEMENT}
+          image: ${IMAGE_TO_USE}
+          command: ["/bin/bash"]
+          args: ["/scripts/${RUN_SCRIPT}"]
+          imagePullPolicy: Always
+          name: ${JOB_NAME}
+          resources:
+            limits:
+              cpu: 50m
+              memory: 50Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+             - mountPath: /var/run/docker.sock
+               name: docker-sock
+      dnsPolicy: ClusterFirst
+      restartPolicy: Never
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      nodeSelector:
+        ${NODE_SELECTOR_KEY}: ${NODE_SELECTOR_VALUE}
+      volumes:
+        - hostPath:
+            path: /var/run/docker.sock
+            type: ''
+          name: docker-sock
