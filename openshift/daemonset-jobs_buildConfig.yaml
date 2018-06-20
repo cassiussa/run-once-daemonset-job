@@ -1,0 +1,30 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  annotations:
+  labels:
+    app: daemonset-jobs
+  name: daemonset-jobs
+spec:
+  failedBuildsHistoryLimit: 1
+  nodeSelector: {}
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'daemonset-jobs:latest'
+  postCommit: {}
+  resources: {}
+  runPolicy: SerialLatestOnly
+  source:
+    git:
+      uri: 'https://github.com/cassiussa/run-once-daemonset-job.git'
+    type: Git
+  strategy:
+    dockerStrategy:
+      dockerfilePath: Dockerfile
+      forcePull: true
+      noCache: true
+    type: Docker
+  successfulBuildsHistoryLimit: 2
+  triggers: []
+
