@@ -1,3 +1,5 @@
+# runOnce Daemonset Job has no releases yet.  Stay tuned.
+
 # runOnce Daemonset Job for OpenShift (and Kubernetes)
 Lets say you want to be able to run a `job` on a series of nodes with a specific label.
 - A Daemonset would let you run pods on different nodes, but not as a `job`
